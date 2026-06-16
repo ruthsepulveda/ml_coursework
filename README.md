@@ -37,7 +37,7 @@ My four main portfolio projects â€” built independently on Santiago urban data â
 
 | Project | Description | Repo |
 |---------|-------------|------|
-| Verde Desigual | Urban green space inequality EDA + Claude narrative | _coming soon_ |
+| Verde Desigual | Urban green space inequality EDA + Claude narrative | [portafolio-eda-santiago](https://github.com/ruthsepulveda/portfolio-eda-santiago) |
 | Aire Santiago | Air quality Streamlit dashboard + NL query interface | _coming soon_ |
 | Huerta Urbana | Urban agriculture ML model + SHAP explainability | _coming soon_ |
 | RAG Pago.cl | TF-IDF RAG pipeline + Claude API | _coming soon_ |
