@@ -1,46 +1,103 @@
-# ML Coursework — Desafío Latam & PUC Chile (2025–2026)
+# ML Coursework — Notebooks from DMLA & Desafío Latam
 
-Exercises and notebooks from my Data Science training:
-- **Data Science Bootcamp** — Desafío Latam (2025–2026)
-- **Diplomado en Machine Learning Aplicado (DMLA)** — Pontificia Universidad Católica de Chile (2025–2026)
+Applied machine learning notebooks developed during two concurrent programmes:
+the **Diplomado en Machine Learning Aplicado (DMLA)** at PUC Chile and the
+**Data Science certification** at Desafío Latam.
 
-These notebooks document my learning progression and the reasoning behind each analytical decision. They are coursework exercises — not portfolio projects.
+Each notebook addresses a real classification problem with full EDA, 
+preprocessing, modelling, hyperparameter tuning, and result analysis.
+
+**Author:** Ruth Sepúlveda  
+**Focus:** Domain Data Scientist — Urban, Environmental, and Social Systems
 
 ---
 
 ## Notebooks
 
-| Notebook | Course | Topic | Key techniques | Result |
-|----------|--------|-------|----------------|--------|
-| [`coffee_quality_ml.ipynb`](coffee_quality_ml.ipynb) | DMLA · PUC Chile | Multiclass coffee quality classification | EDA · PCA + t-SNE · scikit-learn Pipelines · Random Forest · Decision Tree · overfitting analysis | RF balanced accuracy 0.91 · accuracy 0.95 |
+### 1. Coffee Quality Classification
+**File:** [coffee_quality_ml.ipynb](coffee_quality_ml.ipynb)
 
-### What this notebook covers
+**Question:** Can sensory scores and physical attributes predict specialty 
+coffee quality class (Average / Good / Excellent)?
 
-**Dataset:** Coffee Quality Institute (CQI) — 207 Arabica samples, 41 features (sensory scores, physical attributes, origin metadata).  
-**Problem:** Classify coffee quality as Average / Good / Excellent from sensory scores and physical characteristics.
+**Dataset:** Coffee Quality Institute (CQI May-2023) — 207 Arabica samples, 
+41 features including sensory scores, altitude, processing method, and origin.
 
-The notebook works through three phases:
+**Methods:** Exploratory data analysis, feature engineering, t-SNE and PCA 
+visualisation, scikit-learn Pipelines with ColumnTransformer, Random Forest, 
+Decision Tree, DummyClassifier baseline.
 
-**Phase 1 — EDA:** Full column audit with type and null analysis · five analytical charts including bivariate sensory score distributions per quality class and a correlation heatmap · altitude feature parsed from mixed-format text and reclassified into three elevation bands.
+**Key results:**
+- Random Forest: **95.2% accuracy, 0.91 balanced accuracy**
+- Decision Tree: higher balanced accuracy (0.94) but less consistent across 
+  classes
+- Sensory scores (Aroma, Flavor, Acidity) are the strongest predictors; 
+  physical attributes add moderate signal
 
-**Phase 2 — Feature engineering:** Data-leakage-safe column selection (Total Cup Points excluded as it directly generates the target) · dimensionality reduction comparison using PCA 2D vs PCA + t-SNE, showing that quality classes form partially separable clusters with Good/Excellent overlap.
-
-**Phase 3 — Modelling:** Stratified 80/20 split · scikit-learn `Pipeline` with `ColumnTransformer` (separate numeric and categorical sub-pipelines, fitted only on train) · Random Forest and Decision Tree compared against a `DummyClassifier` baseline · confusion matrices · overfitting curve varying `max_depth` 1–30, identifying optimal generalisation at depth 4.
-
-**Key finding:** Random Forest (n=100, class_weight='balanced') achieves balanced accuracy 0.91 and accuracy 0.95. Balanced accuracy is used as the primary metric because the dummy classifier achieves 0.64 accuracy simply by predicting the majority class — an important illustration of metric choice with imbalanced data.
+**Skills demonstrated:** multiclass classification, imbalanced dataset handling, 
+Pipeline design to prevent data leakage, feature selection with domain reasoning, 
+t-SNE visualisation
 
 ---
 
-## Main portfolio
+### 2. Image & Tabular Classification: Fashion MNIST and Forest Cover Type
+**File:** [fashion_mnist_forest_cover_classification.ipynb](fashion_mnist_forest_cover_classification.ipynb)
 
-My four main portfolio projects — built independently on Santiago urban data — are in separate pinned repositories:
+**Question:** How well can k-NN and ensemble models classify image and tabular 
+data, and which features drive those decisions?
 
-| Project | Description | Repo |
-|---------|-------------|------|
-| Verde Desigual | Urban green space inequality EDA + Claude narrative | [portafolio-eda-santiago](https://github.com/ruthsepulveda/portfolio-eda-santiago) |
-| Aire Santiago | Air quality Streamlit dashboard + NL query interface | _coming soon_ |
-| Huerta Urbana | Urban agriculture ML model + SHAP explainability | _coming soon_ |
-| RAG Pago.cl | TF-IDF RAG pipeline + Claude API | _coming soon_ |
+**Datasets:**
+- Fashion MNIST — 70,000 greyscale images (28×28) across 10 clothing categories
+- Forest Cover Type — cartographic variables predicting 7 tree species classes, 
+  sourced from Scikit-learn (581,012 samples, stratified to 14,000)
+
+**Methods:** k-NN with systematic hyperparameter search across distance metrics 
+(Euclidean, Manhattan, Cosine), Logistic Regression (multinomial, cross-validated), 
+Random Forest and Gradient Boosting with GridSearchCV and Stratified 5-Fold CV, 
+PCA and t-SNE, feature importance via MDI and Permutation Importance.
+
+**Key results:**
+- Fashion MNIST: best k-NN (Manhattan, k=7, uniform) — **82.4% test accuracy**, 
+  +2.7 points over baseline through metric tuning alone
+- Forest Cover Type: Random Forest — **87.0% accuracy, macro-F1 0.868**, 
+  outperforming Gradient Boosting (86.2%), k-NN (80.8%), and Logistic 
+  Regression (70.0%)
+- Elevation was the dominant feature across all three Forest Cover models 
+  under both MDI and Permutation Importance, confirming the ecological 
+  hypothesis formed during EDA
+
+**Skills demonstrated:** multiclass classification, hyperparameter tuning, 
+cross-validation methodology, feature importance interpretation, 
+train/validation/test discipline, mixed-feature preprocessing with 
+ColumnTransformer, dimensionality reduction for image data
+
+---
+
+## How to Run
+
+```bash
+git clone https://github.com/ruthsepulveda/ml_coursework
+cd ml_coursework
+pip install -r requirements.txt
+jupyter lab
+```
+
+---
+
+## References
+
+- Blackard, J. A., & Dean, D. J. (1999). Comparative accuracies of artificial 
+  neural networks and discriminant analysis in predicting forest cover types 
+  from cartographic variables. *Computers and Electronics in Agriculture*, 
+  24(3), 131–151.
+- Coffee Quality Institute. (2023). *Coffee Quality Data (CQI May-2023)* 
+  [Dataset]. Kaggle. https://www.kaggle.com/datasets/fatihb/coffee-quality-data-cqi
+- Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. 
+  *Journal of Machine Learning Research*, 12, 2825–2830.
+- Xiao, H., Rasul, K., & Vollgraf, R. (2017). Fashion-MNIST: A novel image 
+  dataset for benchmarking machine learning algorithms. 
+  *arXiv preprint arXiv:1708.07747*.
+
 
 ---
 
