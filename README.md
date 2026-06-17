@@ -58,7 +58,7 @@ PCA and t-SNE, feature importance via MDI and Permutation Importance.
 
 **Key results:**
 - Fashion MNIST: best k-NN (Manhattan, k=5, uniform) — **83.1% test accuracy**, 
-  +2.7 points over baseline through metric tuning alone
+  +1.9 points over baseline through metric tuning alone
 - Forest Cover Type: Random Forest — **87.0% accuracy, macro-F1 0.868**, 
   outperforming Gradient Boosting (86.2%), k-NN (80.8%), and Logistic 
   Regression (70.0%)
